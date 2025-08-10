@@ -60,14 +60,17 @@ class GameScene extends Phaser.Scene {
         this.input.keyboard.on('keydown-SPACE', this.flap, this);
     }
 
-    update() {
+     update() {
         if (this.gameOver) return;
-        this.ground.tilePositionX += 2;
+        this.ground.tilePositionX += 1;
         if (this.bird.body.velocity.y > 0 && this.bird.angle < 90) { this.bird.angle += 2; }
         if (this.bird.y < 0) this.hitObstacle();
-        this.pipes.getChildren().forEach(pipe => {
-            if (pipe.texture.key === 'botpipe' && pipe.scored === false && pipe.x < this.bird.x - 34) {
 
+
+        this.pipes.getChildren().forEach(pipe => {
+            
+            if (pipe.texture.key === 'botpipe' && pipe.scored === false && pipe.x < this.bird.x - 34) {
+               
                 pipe.scored = true;
                 this.score++;
                 this.scoreText.setText(this.score);
