@@ -24,9 +24,7 @@ class MenuScene extends Phaser.Scene {
     }
 }
 
-/**
- * Cena Principal do Jogo
- */
+
 class GameScene extends Phaser.Scene {
     constructor() {
         super({ key: 'GameScene' });
@@ -68,7 +66,8 @@ class GameScene extends Phaser.Scene {
         if (this.bird.body.velocity.y > 0 && this.bird.angle < 90) { this.bird.angle += 2; }
         if (this.bird.y < 0) this.hitObstacle();
         this.pipes.getChildren().forEach(pipe => {
-            if (pipe.getBounds().right < this.bird.getBounds().left && !pipe.scored) {
+            if (pipe.texture.key === 'botpipe' && pipe.scored === false && pipe.x < this.bird.x - 34) {
+
                 pipe.scored = true;
                 this.score++;
                 this.scoreText.setText(this.score);
@@ -83,24 +82,23 @@ class GameScene extends Phaser.Scene {
     }
 
     addPipes() {
-        const pipeGap = 100; // O espaço para o pássaro passar
+        const pipeGap = 100;
         
-        // Decide aleatoriamente a posição do topo do cano de baixo.
-        // A posição Y precisa estar em uma área jogável, não muito alta nem muito baixa.
+       
         const bottomPipeY = Phaser.Math.Between(220, 412);
 
-        // A posição do fundo do cano de cima é a posição do cano de baixo menos o tamanho do buraco.
+       
         const topPipeY = bottomPipeY - pipeGap;
         
-        // Cria o cano de baixo e ancora seu ponto de física no topo.
+
         const bottomPipe = this.pipes.create(288, bottomPipeY, 'botpipe');
         bottomPipe.setOrigin(0, 0); 
         
-        // Cria o cano de cima e ancora seu ponto de física na base.
+
         const topPipe = this.pipes.create(288, topPipeY, 'toppipe');
         topPipe.setOrigin(0, 1);
         
-        // Configura a física para ambos os canos
+
         [topPipe, bottomPipe].forEach(pipe => {
             pipe.setImmovable(true).body.setAllowGravity(false);
             pipe.setVelocityX(-160);
@@ -121,9 +119,7 @@ class GameScene extends Phaser.Scene {
     }
 }
 
-/**
- * Cena de Fim de Jogo
- */
+
 class GameOverScene extends Phaser.Scene {
     constructor() { super({ key: 'GameOverScene' }); }
     preload() { this.load.image('gameover_text', 'assets/go.png'); }
@@ -140,7 +136,7 @@ class GameOverScene extends Phaser.Scene {
     }
 }
 
-// Configuração final com tela cheia responsiva e fundo transparente
+
 const config = {
     type: Phaser.AUTO,
     transparent: true, 
