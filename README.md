@@ -1,5 +1,5 @@
-# Clone do Flappy Bird com Phaser 3
-## https://foxmoondev.github.io/Flappybird/ <------------- Play Game
+# Clone do Flappy Bird com Phaser 3 🕊
+## https://foxmoondev.github.io/Flappybird/ <------------- Play Game 🎮
 ![demo](https://github.com/user-attachments/assets/65e6a8be-7802-4a5a-918e-d83266edac23)
 
 Este é um clone fiel do clássico jogo "Flappy Bird", desenvolvido do zero em JavaScript puro utilizando o framework de jogos 2D [Phaser 3](https://phaser.io/).
