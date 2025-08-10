@@ -1,6 +1,3 @@
-/**
- * Cena de Menu/Início ("Get Ready")
- */
 class MenuScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MenuScene' });
