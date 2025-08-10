@@ -83,20 +83,31 @@ class GameScene extends Phaser.Scene {
     }
 
     addPipes() {
-        const pipeGap = 100;
-        const pipeY = Phaser.Math.Between(-120, 120);
+        const pipeGap = 100; // O espaço para o pássaro passar
+        
+        // Decide aleatoriamente a posição do topo do cano de baixo.
+        // A posição Y precisa estar em uma área jogável, não muito alta nem muito baixa.
+        const bottomPipeY = Phaser.Math.Between(220, 412);
 
-        const topPipe = this.pipes.create(288, pipeY, 'toppipe');
-        topPipe.setOrigin(0, 1).setImmovable(true).body.allowGravity = false;
-        topPipe.setVelocityX(-160);
-
-        // --- ESTA É A LINHA CORRIGIDA ---
-        const bottomPipe = this.pipes.create(288, pipeY + pipeGap, 'botpipe');
-        bottomPipe.setOrigin(0, 0).setImmovable(true).body.allowGravity = false;
-        bottomPipe.setVelocityX(-160);
-
-        topPipe.checkWorldBounds = true; bottomPipe.checkWorldBounds = true;
-        topPipe.outOfBoundsKill = true; bottomPipe.outOfBoundsKill = true;
+        // A posição do fundo do cano de cima é a posição do cano de baixo menos o tamanho do buraco.
+        const topPipeY = bottomPipeY - pipeGap;
+        
+        // Cria o cano de baixo e ancora seu ponto de física no topo.
+        const bottomPipe = this.pipes.create(288, bottomPipeY, 'botpipe');
+        bottomPipe.setOrigin(0, 0); 
+        
+        // Cria o cano de cima e ancora seu ponto de física na base.
+        const topPipe = this.pipes.create(288, topPipeY, 'toppipe');
+        topPipe.setOrigin(0, 1);
+        
+        // Configura a física para ambos os canos
+        [topPipe, bottomPipe].forEach(pipe => {
+            pipe.setImmovable(true).body.setAllowGravity(false);
+            pipe.setVelocityX(-160);
+            pipe.checkWorldBounds = true;
+            pipe.outOfBoundsKill = true;
+        });
+          bottomPipe.scored = false;
     }
 
     hitObstacle() {
